@@ -64,6 +64,15 @@
         <td>ERP</td>
       </tr>
 
+       <tr>
+        <th>Solid Dyeing</th>
+        <td>CPB</td>
+        <td>MTR</td>
+        <td>2,00,000</td>
+        <td>{{ number_format($cpb) }}</td>
+        <td>ERP</td>
+      </tr>
+
     </table>
   </div>
 </div>

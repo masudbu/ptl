@@ -273,6 +273,7 @@ class DashboardController extends Controller
         $getTotalProduction['weaving'] = Production::whereBetween('production_date', [$startDate, $endDate])->sum('weaving');
         $getTotalProduction['pretreatment'] = Production::whereBetween('production_date', [$startDate, $endDate])->sum('pretreatment');
         $getTotalProduction['thermosol'] = Production::whereBetween('production_date', [$startDate, $endDate])->sum('thermosol');
+        $getTotalProduction['cpb'] = Production::whereBetween('production_date', [$startDate, $endDate])->sum('cpb');
 
         $totalProduction = array(
             'startDate'=>$startDate,
@@ -283,6 +284,7 @@ class DashboardController extends Controller
             'weaving'=>$getTotalProduction['weaving'],
             'pretreatment'=>$getTotalProduction['pretreatment'],
             'thermosol'=>$getTotalProduction['thermosol'],
+            'cpb'=>$getTotalProduction['cpb'],
         );
 
          return view('dashboard.dailyProductionReviewSearch',$totalProduction);
