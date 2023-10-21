@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Imports\UserImport;
 use App\Exports\UsersExport;
+use App\Exports\ProductionReviewExport;
 use App\Models\User;
 use App\Models\Production;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,9 +36,7 @@ class DashboardController extends Controller
             'warping'=>['required','string','max:6'],
             'sizing'=>['required','string','max:6'],
         ]);
-
         $productionInfo = array();
-
         $productionInfo['user_id']=auth()->user()->id;
         $productionInfo['production_date']=$request->get('production_date');
         $productionInfo['yarndyeing']=$request->get('yarndyeing');
@@ -106,7 +105,6 @@ class DashboardController extends Controller
         $productionInfo_sarch = Production::select('id', 'production_date', 'yarndyeing','warping', 'sizing','weaving','pretreatment','thermosol', 'created_at')
                         ->whereBetween('production_date', [$startDate, $endDate])
                         ->get();
-
         return view('dashboard.production_search_view',compact('productionInfo_sarch'));
         }
 
@@ -262,6 +260,12 @@ class DashboardController extends Controller
 
         }
     }
+
+    public function reviewExport(Request $request) 
+    {
+        return Excel::download(new ProductionReviewExport, 'production.xlsx');
+    }
+
     public function production_review_search(Request $request){
 
         $startDate = $request->get('start_date');

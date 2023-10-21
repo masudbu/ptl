@@ -25,12 +25,7 @@
           {{$message}}
       </div>
       @enderror
-    <div class="form-group">
-      <select class="form-control" name="section">
-        <option>Yarn Dyeing</option>
-        <option>Yarn Dyeing</option>
-      </select>
-    </div>
+    
       <button type="submit" class="btn btn-primary">Search</button>
   </form>
 </div>

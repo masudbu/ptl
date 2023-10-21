@@ -74,3 +74,16 @@ Route::get('/yarndyeing', [App\Http\Controllers\YarndyeingController::class, 'in
 Route::post('/yarndyeing_import_file', [App\Http\Controllers\YarndyeingController::class, 'yarndyeing_import'])->name('importExcelYarnDyeing');
 
 Route::get('/yarndyeing-export-file', [App\Http\Controllers\YarndyeingController::class, 'yarndyeing_export'])->name('exportExcelYarnDyeing');
+
+//Master Setup Controller Diclare
+//for process add form
+Route::get('/department-create', [App\Http\Controllers\MasterController::class, 'department_create'])->name('departmentForm');
+Route::post('/department-add', [App\Http\Controllers\MasterController::class, 'department_add'])->name('departmentAdd');
+Route::get('/add-process', [App\Http\Controllers\MasterController::class, 'index'])->name('processForm');
+Route::post('/process-add', [App\Http\Controllers\MasterController::class, 'process_add'])->name('processAdd');
+
+//This section for fabric transfer 
+Route::get('/finish-to-final',[App\Http\Controllers\TransferController::class, 'index'])->name('finishToFinal');
+
+
+Route::get('/search', [App\Http\Controllers\TransferController::class, 'search'])->name('search');

@@ -7,8 +7,6 @@
       </div>
        
       <div class="col-md-6">
-      <!--  <input class="form-control" id="datepicker" type="text" name="dateFrom" > -->
-          <input name ="valid_to" type="text" class="form-control valid_to" placeholder = "Valid To" data-date-start-date="d" id="datepicker" value = "{{date('Y-m-d', strtotime('+1 day'))}}">
       </div>
 </div>
 <div class="row">    

@@ -3,10 +3,7 @@
 @section('main')
 <div class="row">
   <div class="col-md-3">
-    <p>
-    <a href="{{ route('previousProductionRecord',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-secondary">Previous</a>
-    <a href="{{ route('nextProductionRecord',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-secondary text-end">Next</a>
-  </p>
+    
   </div>
   <div class="col-md-6">
     <form action="{{ route('productionReviewSearch')}}" method="POST">
@@ -33,11 +30,25 @@
     </form>
   </div>
   <div class="col-md-3">
-    
   </div>
 </div>
 <div class="row">
   <h3 class="text-center">Production Date: {{$productionReview->production_date}}</h3>
+  <div class="col-md-3">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <a href="{{ route('previousProductionRecord',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-secondary">Previous</a>
+      <a href="{{ route('nextProductionRecord',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-secondary text-end">Next</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    
+  </div>
+  <div class="col-md-3">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <a href="" class="btn btn-xs btn-danger">PDF</a>
+      <a href="" class="btn btn-xs btn-success">XL</a>
+    </div>
+  </div>
   <div class="table-responsive-sm">
     <table class="table table-bordered table-hover border-primary">
       <tr class="table-info border-success">
