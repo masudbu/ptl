@@ -116,14 +116,14 @@ class DashboardController extends Controller
        if(isset($pro_id) && $pro_id !==null){
         $productionSlip = Production::select('*')->where('id', $pro_id)->get()->first();
         $data = [
-            'title' => 'Welcome to ItSolutionStuff.com',
+            'title' => 'Daily Production PDF',
             'date' => date('m/d/Y'),
             'productionSlip' => $productionSlip
         ]; 
         
         $pdf = PDF::loadView('dashboard.pdf.productionSlipPdf', $data);
      
-        return $pdf->download('itsolutionstuff.pdf');
+        return $pdf->download('productionSlip.pdf');
         return view('dashboard.productionSlip',compact('productionSlip'));
         }
         else{
