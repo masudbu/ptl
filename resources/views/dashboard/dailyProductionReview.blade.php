@@ -45,7 +45,7 @@
   </div>
   <div class="col-md-3">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <a href="{{ route('showProductionSlip',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-danger">PDF</a>
+      <a href="{{ route('showProductionSlip',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-danger" target="_blank">PDF</a>
       <!-- <a href="" class="btn btn-xs btn-success">XL</a> -->
     </div>
   </div>

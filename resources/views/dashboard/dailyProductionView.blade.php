@@ -64,7 +64,7 @@
           <td>
             <a href="{{ route('showProductionview',['id'=>$dailyProduction->id]) }}" class="btn btn-xs btn-info">View
             </a>
-            <a href="{{ route('showProductionSlip',['id'=>$dailyProduction->id]) }}" class="btn btn-xs btn-success">Pdf
+            <a href="{{ route('showProductionSlip',['id'=>$dailyProduction->id]) }}" class="btn btn-xs btn-success" target="_blank">Pdf
             </a>
             <a href="{{ route('showDailyProduction',['id'=>$dailyProduction->id]) }}" class="btn btn-xs btn-warning">Edit</a>
           </td>

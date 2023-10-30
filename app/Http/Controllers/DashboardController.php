@@ -22,8 +22,22 @@ class DashboardController extends Controller
     }
     public function index()
     {
+        $items = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(created_at) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal"),
+            )
+            ->whereYear('created_at', date('Y'))
+            ->groupBy('month_name')
+            ->get();
+                       
+  
+        //dd($items);
+         //Carbon::now()->month
+        $yarndyeing9 = Production::whereMonth('created_at', '9')->whereYear('created_at','2023')->sum('yarndyeing');
+        $yarndyeing = Production::whereMonth('created_at', '10')->whereYear('created_at','2023')->sum('yarndyeing');
+        //dd($yarndyeing);
         $productionShortReview = Production::select('*')->get()->last();
-        return view('dashboard.home', compact('productionShortReview'));
+        return view('dashboard.home', compact('productionShortReview','yarndyeing','yarndyeing9','items'));
     }
     public function dailyProductionEntryForm(){
 
@@ -123,7 +137,8 @@ class DashboardController extends Controller
         
         $pdf = PDF::loadView('dashboard.pdf.productionSlipPdf', $data);
      
-        return $pdf->download('productionSlip.pdf');
+        //return $pdf->download('productionSlip.pdf');
+        return $pdf->stream('productionSlip.pdf');
         return view('dashboard.productionSlip',compact('productionSlip'));
         }
         else{

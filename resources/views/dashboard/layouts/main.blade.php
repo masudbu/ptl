@@ -113,6 +113,104 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
+    @if(request()->is('dashboard')))
+      <script type="text/javascript">
+        var options = {
+            series: [{
+            name: 'YD',
+            data: [
+              2.3, 
+              3.1,
+              4.0, 
+              10.1, 
+              4.0, 
+              3.6, 
+              3.2, 
+              2.3, 
+              {{number_format($yarndyeing9/1000)}},
+              {{number_format($yarndyeing/1000)}},
+              0.5, 
+              0.2
+            ]
+          }],
+            chart: {
+            height: 350,
+            type: 'bar',
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              dataLabels: {
+                position: 'top', // top, center, bottom
+              },
+            }
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val + " ";//This is mesurement Unit
+            },
+            offsetY: -20,
+            style: {
+              fontSize: '12px',
+              colors: ["#304758"]
+            }
+          },
+          
+          xaxis: {
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            position: 'top',
+            axisBorder: {
+              show: false
+            },
+            axisTicks: {
+              show: false
+            },
+            crosshairs: {
+              fill: {
+                type: 'gradient',
+                gradient: {
+                  colorFrom: '#D8E3F0',
+                  colorTo: '#BED1E6',
+                  stops: [0, 100],
+                  opacityFrom: 0.4,
+                  opacityTo: 0.5,
+                }
+              }
+            },
+            tooltip: {
+              enabled: true,
+            }
+          },
+          yaxis: {
+            axisBorder: {
+              show: false
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              show: false,
+              formatter: function (val) {
+                return val + " ";//This is mesurement Unit
+              }
+            }
+          
+          },
+          title: {
+            text: 'Yarn Dyeing Production Chart-2023 (Ton)',
+            floating: true,
+            offsetY: 330,
+            align: 'center',
+            style: {
+              color: '#444'
+            }
+          }
+          };
+
+          var chart = new ApexCharts(document.querySelector("#chart"), options);
+          chart.render()
+      </script>
+    @endif
   </body>
 </html>

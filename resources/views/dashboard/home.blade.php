@@ -2,7 +2,8 @@
 @section('main')
 <div class="row">
 	<div class="col-md-6">
-		<h3 class="text-center border border-primary">Production Summary of : {{$productionShortReview->production_date}}</h3>
+		<h3 class="text-center border border-primary">
+			Production Summary of : {{$productionShortReview->production_date}}</h3>
 		<hr>
 		<div class="table-responsive-sm" id="homeDashboard">
 		    <table class="table table-bordered table-hover border-primary">
@@ -160,7 +161,24 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		
+		<div class="chart-container">
+			<div class="chart has-fixed-height" id="chart"></div>
+		</div>
+		<table class="table table-bordered table-hover border-danger">
+			<tr>
+				<th>Month</th>
+				<th>Total Qty(Kg)</th>
+				<th>Total Qty(Ton)</th>
+			</tr>
+			@foreach($items as $data)
+			<tr>
+				<td>{{$data->month_name}}</td>
+				<td>{{number_format($data->yarndyeingMonthTotal)}}</td>
+				<td>{{number_format($data->yarndyeingMonthTotal/1000)}}</td>
+			</tr>
+			@endforeach
+		</table>
 	</div>
 </div>
 @endsection
+
