@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 @section('main')
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<h3 class="text-center border border-primary">
 			Production Summary of : {{$productionShortReview->production_date}}</h3>
 		<hr>
@@ -160,7 +160,7 @@
 		    </table> 
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="chart-container">
 			<div class="chart has-fixed-height" id="chart"></div>
 		</div>

@@ -133,5 +133,5 @@ table, th, tr, td {
 #homeDashboard table tr{
   line-height: 5px;
   min-height: 5px;
-  height: 5px;
+  height: 20px;
 }

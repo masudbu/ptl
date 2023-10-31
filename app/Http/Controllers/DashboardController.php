@@ -24,20 +24,23 @@ class DashboardController extends Controller
     {
         $items = Production::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("MONTHNAME(created_at) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal"),
             )
-            ->whereYear('created_at', date('Y'))
+            ->whereYear('production_date', date('Y'))
             ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
             ->get();
                        
   
         //dd($items);
          //Carbon::now()->month
-        $yarndyeing9 = Production::whereMonth('created_at', '9')->whereYear('created_at','2023')->sum('yarndyeing');
-        $yarndyeing = Production::whereMonth('created_at', '10')->whereYear('created_at','2023')->sum('yarndyeing');
+        $yarndyeing1 = Production::whereMonth('production_date', '1')->whereYear('production_date','2023')->sum('yarndyeing');
+        $yarndyeing2 = Production::whereMonth('production_date', '2')->whereYear('production_date','2023')->sum('yarndyeing');
+        $yarndyeing9 = Production::whereMonth('production_date', '9')->whereYear('production_date','2023')->sum('yarndyeing');
+        $yarndyeing = Production::whereMonth('production_date', '10')->whereYear('production_date','2023')->sum('yarndyeing');
         //dd($yarndyeing);
-        $productionShortReview = Production::select('*')->get()->last();
-        return view('dashboard.home', compact('productionShortReview','yarndyeing','yarndyeing9','items'));
+        $productionShortReview = Production::select('*')->orderBy('production_date','desc')->get()->first();
+        return view('dashboard.home', compact('productionShortReview','yarndyeing','yarndyeing1','yarndyeing2','yarndyeing9','items'));
     }
     public function dailyProductionEntryForm(){
 
@@ -238,7 +241,7 @@ class DashboardController extends Controller
     //for daily production view date wise
     public function daily_production_review(){
 
-        $productionReview = Production::select('*')->get()->last();
+        $productionReview = Production::select('*')->orderBy("production_date", "desc")->get()->first();
         return view('dashboard.dailyProductionReview', compact('productionReview'));
 
     }

@@ -119,14 +119,14 @@
             series: [{
             name: 'YD',
             data: [
-              2.3, 
-              3.1,
+              {{number_format($yarndyeing1/1000)}},
+              {{number_format($yarndyeing2/1000)}},
               4.0, 
               10.1, 
               4.0, 
               3.6, 
               3.2, 
-              2.3, 
+              2.3,
               {{number_format($yarndyeing9/1000)}},
               {{number_format($yarndyeing/1000)}},
               0.5, 
