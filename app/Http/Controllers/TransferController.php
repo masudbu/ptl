@@ -19,10 +19,11 @@ class TransferController extends Controller
     }
 
     public function search(Request $request){
-		$dispo_no = (int) $request->get('search');
-		//$products=DB::table('production_order')->where('dispo_no','LIKE','%'.$dispo."%")->get()->last();
-		$production_order = DB::table('production_order')->select('*')->where('dispo_no', $dispo_no)->get()->first();
+		$dispo_no = $request->get('search');
+		$products=DB::table('production_orders')->where('dispo_no','LIKE','%'.$dispo_no."%")->get()->last();
+		//$production_order = DB::table('production_orders')->select('*')->where('dispo_no', $dispo_no)->get();
+        //dd($products);
 		//$products->buyer;
- 		return response()->json($production_order);
+ 		return response()->json($products);
     }
 }

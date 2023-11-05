@@ -131,7 +131,5 @@ table, th, tr, td {
     color: #000;
 }
 #homeDashboard table tr{
-  line-height: 5px;
-  min-height: 5px;
-  height: 20px;
+  line-height: 10px;
 }

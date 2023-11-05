@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\imports\DispoImport;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
@@ -55,5 +57,17 @@ class MasterController extends Controller
         //dd($departmentInfo);
     	DB::table('process')->insert($departmentInfo);
     	return redirect()->back();
+    }
+
+    //Daily Dispo Upload
+    public function dailyDispoForm(){
+
+        return view('basic_setup.dispo_upload');
+    }
+
+    public function daily_dispo_import(){
+        //dd(request()->file('dispo_upload'));
+        Excel::import(new DispoImport, request()->file('dispo_upload'));
+        return redirect()->back();
     }
 }

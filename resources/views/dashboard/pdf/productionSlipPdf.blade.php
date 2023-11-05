@@ -173,8 +173,8 @@
         <td>MTR</td>
         <td>30,000</td>
         <td>{{ number_format($productionSlip->softflow_woven) }}</td>
-        <td>{{ number_format($productionSlip->softflow_woven) }}</td>
-        <td>{{ number_format($productionSlip->washing3_goller_sd + $productionSlip->softflow_woven_others) }}</td>
+        <td>{{ number_format($productionSlip->softflow_woven_others) }}</td>
+        <td>{{ number_format($productionSlip->softflow_woven + $productionSlip->softflow_woven_others) }}</td>
         <td>ERP</td>
       </tr>
       <tr>
@@ -184,7 +184,7 @@
         <td>{{ $productionSlip->softflow_knit / 1000}}</td>
         <td>{{ $productionSlip->softflow_knit_others / 1000 }}</td>
         @php ($softFlowKnitTotal = $productionSlip->softflow_knit + $productionSlip->softflow_knit_others)
-        <td>{{ $softFlowKnitTotal/1000 }}</td>
+        <td>{{ number_format($softFlowKnitTotal/1000) }}</td>
         <td>Manual</td>
       </tr>
       <tr>

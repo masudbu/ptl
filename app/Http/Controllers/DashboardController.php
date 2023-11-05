@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Imports\UserImport;
 use App\Exports\UsersExport;
-use App\Exports\ProductionReviewExport;
 use App\Models\User;
 use App\Models\Production;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,7 +21,8 @@ class DashboardController extends Controller
     }
     public function index()
     {
-        $items = Production::select(
+        //get monthly yarn dyeing production
+        $monthlyYDProduction = Production::select(
             DB::raw("(COUNT(*)) as count"),
             DB::raw("MONTHNAME(production_date) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal"),
             )
@@ -30,17 +30,31 @@ class DashboardController extends Controller
             ->groupBy('month_name')
             ->orderBy('production_date','ASC')
             ->get();
-                       
-  
+
+        //get monthly Dyed Yarn Delivery
+        $monthlyDyedYarnDelivery = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(yd_outparty_mm) as dyedYarnMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+        //get monthly Woven Fabric Delivery
+        $monthlyFabricDelivery = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(fabric_delivery_mm) as fabricMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
         //dd($items);
          //Carbon::now()->month
-        $yarndyeing1 = Production::whereMonth('production_date', '1')->whereYear('production_date','2023')->sum('yarndyeing');
-        $yarndyeing2 = Production::whereMonth('production_date', '2')->whereYear('production_date','2023')->sum('yarndyeing');
-        $yarndyeing9 = Production::whereMonth('production_date', '9')->whereYear('production_date','2023')->sum('yarndyeing');
-        $yarndyeing = Production::whereMonth('production_date', '10')->whereYear('production_date','2023')->sum('yarndyeing');
-        //dd($yarndyeing);
+      
         $productionShortReview = Production::select('*')->orderBy('production_date','desc')->get()->first();
-        return view('dashboard.home', compact('productionShortReview','yarndyeing','yarndyeing1','yarndyeing2','yarndyeing9','items'));
+        return view('dashboard.home', compact('productionShortReview','monthlyYDProduction','monthlyDyedYarnDelivery','monthlyFabricDelivery'));
     }
     public function dailyProductionEntryForm(){
 
@@ -119,8 +133,9 @@ class DashboardController extends Controller
 
        if($startDate !== null && $endDate !==null){
   
-        $productionInfo_sarch = Production::select('id', 'production_date', 'yarndyeing','warping', 'sizing','weaving','pretreatment','thermosol', 'created_at')
+        $productionInfo_sarch = Production::select('*')
                         ->whereBetween('production_date', [$startDate, $endDate])
+                        ->orderBy('production_date','desc')
                         ->get();
         return view('dashboard.production_search_view',compact('productionInfo_sarch'));
         }
@@ -250,13 +265,13 @@ class DashboardController extends Controller
         $pro_id = $request->get('id');
         $latestId = Production::latest()->first()->id;
         //dd($latestId);
-        if($pro_id ==$latestId){
+        if($pro_id == $latestId){
             $productionReview = Production::select('*')->get()->last();
             return view('dashboard.dailyProductionReview', compact('productionReview'));
         }
         else{
 
-            $productionReview = Production::select('*')->where('id', '>', $pro_id)->get()->first();
+            $productionReview = Production::select('*')->where('production_date', '>', $pro_id)->get()->first();
             return view('dashboard.dailyProductionReview',compact('productionReview'));
             
         }
@@ -266,24 +281,18 @@ class DashboardController extends Controller
 
         $pro_id = $request->get('id');
         $firstId = Production::first()->id;
-        //dd($firstId);
+        //dd($pro_id);
         if($pro_id==$firstId){
             $productionReview = Production::select('*')->get()->last();
             return view('dashboard.dailyProductionReview', compact('productionReview'));
         }
         else{
 
-            $productionReview = Production::select('*')->where('id', '<', $pro_id)->orderBy('id','desc')->first();
+            $productionReview = Production::select('*')->where('production_date', '<', $pro_id)->orderBy('production_date','desc')->first();
             return view('dashboard.dailyProductionReview',compact('productionReview'));
 
         }
     }
-
-    public function reviewExport(Request $request) 
-    {
-        return Excel::download(new ProductionReviewExport, 'production.xlsx');
-    }
-
     public function production_review_search(Request $request){
 
         $startDate = $request->get('start_date');

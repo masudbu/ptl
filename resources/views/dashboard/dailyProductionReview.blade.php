@@ -36,8 +36,8 @@
   <h3 class="text-center">Production Date: {{$productionReview->production_date}}</h3>
   <div class="col-md-3">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <a href="{{ route('previousProductionRecord',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-secondary">Previous</a>
-      <a href="{{ route('nextProductionRecord',['id'=>$productionReview->id]) }}" class="btn btn-xs btn-secondary text-end">Next</a>
+      <a href="{{ route('previousProductionRecord',['id'=>$productionReview->production_date]) }}" class="btn btn-xs btn-secondary">Previous</a>
+      <a href="{{ route('nextProductionRecord',['id'=>$productionReview->production_date]) }}" class="btn btn-xs btn-secondary text-end">Next</a>
     </div>
   </div>
   <div class="col-md-6">
@@ -193,18 +193,18 @@
         <td>MTR</td>
         <td>30,000</td>
         <td>{{ number_format($productionReview->softflow_woven) }}</td>
-        <td>{{ number_format($productionReview->softflow_woven) }}</td>
-        <td>{{ number_format($productionReview->washing3_goller_sd + $productionReview->softflow_woven_others) }}</td>
+        <td>{{ number_format($productionReview->softflow_woven_others) }}</td>
+        <td>{{ number_format($productionReview->softflow_woven + $productionReview->softflow_woven_others) }}</td>
         <td>ERP</td>
       </tr>
       <tr>
         <td>Knit</td>
         <td>TON</td>
         <td>3</td>
-        <td>{{ $productionReview->softflow_knit / 1000}}</td>
-        <td>{{ $productionReview->softflow_knit_others / 1000 }}</td>
+        <td>{{ number_format($productionReview->softflow_knit)}}</td>
+        <td>{{ number_format($productionReview->softflow_knit_others) }}</td>
         @php ($softFlowKnitTotal = $productionReview->softflow_knit + $productionReview->softflow_knit_others)
-        <td>{{ $softFlowKnitTotal/1000 }}</td>
+        <td>{{ number_format($softFlowKnitTotal/1000) }}</td>
         <td>Manual</td>
       </tr>
       <tr>

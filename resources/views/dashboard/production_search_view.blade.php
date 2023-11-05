@@ -40,6 +40,7 @@
           <th scope="col">Production Date</th>
           <th scope="col">Yarn Dyeing</th>
           <th scope="col">Warping</th>
+          <th scope="col">YD Delivery</th>
          <!--  <th scope="col">Sizing</th>
           <th scope="col">Weaving</th>
           <th scope="col">Pretreatment</th>
@@ -52,10 +53,11 @@
         @if(isset($productionInfo_sarch))
         @foreach($productionInfo_sarch as $dailyProduction)
         <tr>
-          <th scope="row">{{ $dailyProduction->id }}</th>
+          <th scope="row">{{ $loop->iteration}}</th>
           <td>{{ $dailyProduction->production_date }}</td>
           <td>{{ $dailyProduction->yarndyeing }}</td>
           <td>{{ $dailyProduction->warping }}</td>
+          <td>{{ $dailyProduction->yd_outparty_mm }}</td>
           <!-- <td>{{ $dailyProduction->sizing }}</td>
           <td>{{ $dailyProduction->weaving }}</td>
           <td>{{ $dailyProduction->pretreatment }}</td>

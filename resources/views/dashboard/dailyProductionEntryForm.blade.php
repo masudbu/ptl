@@ -21,7 +21,7 @@
               </div>
           <div class="form-group">
             <label for="warping" class="form-label">Warping</label>
-            <input type="number" class="form-control" id="warping" name="warping" placeholder="Enter Warping Production" value="{{old('warping')}}">
+            <input type="number" class="form-control" id="warping" name="warping" placeholder="Enter Warping Production" value="1">
             @error('warping')
             <div class="alert alert-danger">
                 {{$message}}
@@ -30,7 +30,7 @@
           </div>
           <div class="form-group">
             <label for="sizing" class="form-label">Sizing</label>
-            <input type="number" class="form-control" id="sizing" name="sizing" placeholder="Enter Sizing Production" value="{{old('sizing')}}">
+            <input type="number" class="form-control" id="sizing" name="sizing" placeholder="Enter Sizing Production" value="1">
             @error('sizing')
             <div class="alert alert-danger">
                 {{$message}}
@@ -39,7 +39,7 @@
           </div>
           <div class="form-group">
             <label for="weaving" class="form-label">Weaving</label>
-            <input type="number" class="form-control" id="weaving" name="weaving" placeholder="Enter Weaving Production" value="{{old('weaving')}}">
+            <input type="number" class="form-control" id="weaving" name="weaving" placeholder="Enter Weaving Production" value="1">
             @error('weaving')
             <div class="alert alert-danger">
                 {{$message}}

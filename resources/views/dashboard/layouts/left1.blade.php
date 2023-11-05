@@ -120,7 +120,7 @@
           </li>
         </ul>
       </li>
-      <li class="menu-item {{ (request()->is('department-create','add-process')) ? 'open' : '' }}">
+      <li class="menu-item {{ (request()->is('department-create','add-process','dispo-upload-form')) ? 'open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>
           <div data-i18n="Misc">Master Setup</div>
@@ -134,6 +134,11 @@
           <li class="menu-item {{ (request()->is('add-process')) ? 'active' : '' }}">
             <a href="{{route('processForm')}}" class="menu-link">
               <div data-i18n="Under Maintenance">Process</div>
+            </a>
+          </li>
+          <li class="menu-item {{ (request()->is('dispo-upload-form')) ? 'active' : '' }}">
+            <a href="{{route('dispo_upload_form')}}" class="menu-link">
+              <div data-i18n="Under Maintenance">Dispo Upload</div>
             </a>
           </li>
         </ul>
