@@ -75,16 +75,14 @@
         <td>Warping</td>
         <td rowspan="2">MTR</td>
         <td>1,80,000</td>
-        <td>{{ number_format($productionReview->warping) }}</td>
-        <td>-</td>
+        <td colspan="2">{{ number_format($productionReview->warping) }}</td>
         <td>{{ number_format($productionReview->warping) }}</td>
         <td>ERP</td>
       </tr>
       <tr>
         <td>Sizing</td>
         <td>2,00,000</td>
-        <td>{{ number_format($productionReview->sizing) }}</td>
-        <td>-</td>
+        <td colspan="2">{{ number_format($productionReview->sizing) }}</td>
         <td>{{ number_format($productionReview->sizing) }}</td>
         <td>ERP</td>
       </tr>

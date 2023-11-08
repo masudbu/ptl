@@ -22,7 +22,7 @@ class DashboardController extends Controller
     public function index()
     {
         //get monthly yarn dyeing production
-        $monthlyYDProduction = Production::select(
+       $monthlyYDProduction = Production::select(
             DB::raw("(COUNT(*)) as count"),
             DB::raw("MONTHNAME(production_date) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal"),
             )
@@ -31,10 +31,12 @@ class DashboardController extends Controller
             ->orderBy('production_date','ASC')
             ->get();
 
+            
+
         //get monthly Dyed Yarn Delivery
         $monthlyDyedYarnDelivery = Production::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("MONTHNAME(production_date) as month_name, SUM(yd_outparty_mm) as dyedYarnMonthTotal"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(yd_outparty_mm) as dyedYarnMonthTotal,SUM(printing_knit_mm) as AopKnitMonthTotal"),
             )
             ->whereYear('production_date', date('Y'))
             ->groupBy('month_name')
@@ -44,7 +46,7 @@ class DashboardController extends Controller
         //get monthly Woven Fabric Delivery
         $monthlyFabricDelivery = Production::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("MONTHNAME(production_date) as month_name, SUM(fabric_delivery_mm) as fabricMonthTotal"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(fabric_delivery_mm) as fabricMonthTotal, SUM(fabric_delivery_mm_others) as fabricMonthTotalOthers,SUM(fabric_delivery_mm_commission) as fabricMonthTotalCommission,SUM(printing_woven_mm) as printingWovenMonthTotal"),
             )
             ->whereYear('production_date', date('Y'))
             ->groupBy('month_name')
@@ -57,7 +59,6 @@ class DashboardController extends Controller
         return view('dashboard.home', compact('productionShortReview','monthlyYDProduction','monthlyDyedYarnDelivery','monthlyFabricDelivery'));
     }
     public function dailyProductionEntryForm(){
-
         return view('dashboard.dailyProductionEntryForm');
     }
 
@@ -121,7 +122,7 @@ class DashboardController extends Controller
     }
 
     public function production_advance_search(Request $request){
-      /* $startDate = Carbon::createFromFormat('m-d-Y', $request->get('start_date'));
+      /*$startDate = Carbon::createFromFormat('m-d-Y', $request->get('start_date'));
         $endDate = Carbon::createFromFormat('m-d-Y', $request->get('end_date'));*/
         $request->validate([
             'start_date'=>['required'],
@@ -132,11 +133,10 @@ class DashboardController extends Controller
         $endDate = $request->get('end_date');
 
        if($startDate !== null && $endDate !==null){
-  
         $productionInfo_sarch = Production::select('*')
-                        ->whereBetween('production_date', [$startDate, $endDate])
-                        ->orderBy('production_date','desc')
-                        ->get();
+            ->whereBetween('production_date', [$startDate, $endDate])
+            ->orderBy('production_date','desc')
+            ->get();
         return view('dashboard.production_search_view',compact('productionInfo_sarch'));
         }
 
@@ -186,7 +186,6 @@ class DashboardController extends Controller
             return redirect()->route('dailyProductionList');
         }
         else{
-            
             $productionShow = Production::select('*')->where('id', $pro_id)->get()->first();
             return view('dashboard.productionShow',compact('productionShow'));
         }
@@ -211,6 +210,7 @@ class DashboardController extends Controller
         $production->cpb = $request->get('cpb');
         $production->cpb_others = $request->get('cpb_others');
         $production->custic_padding = $request->get('custic_padding');
+        $production->custic_padding_others = $request->get('custic_padding_others');
         $production->yd_correction = $request->get('yd_correction');
         $production->jigger = $request->get('jigger');
         $production->jigger_others = $request->get('jigger_others');
@@ -245,6 +245,8 @@ class DashboardController extends Controller
         $production->printing_woven_mm = $request->get('printing_woven_mm');
         $production->printing_woven_mm_total_month = $request->get('printing_woven_mm_total_month');
         $production->fabric_delivery_mm = $request->get('fabric_delivery_mm');
+        $production->fabric_delivery_mm_others = $request->get('fabric_delivery_mm_others');
+        $production->fabric_delivery_mm_commission = $request->get('fabric_delivery_mm_commission');
         $production->fabric_delivery_mm_total_month = $request->get('fabric_delivery_mm_total_month');
         $production->updated_by = auth()->user()->name;
 

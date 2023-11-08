@@ -101,6 +101,10 @@
             <input type="number" class="form-control" id="custic_padding" name="custic_padding" placeholder="Enter Custic Padding" value="{{old('custic_padding')}}">
           </div>
           <div class="form-group">
+            <label for="custic_padding_others" class="form-label">Custic Padding</label>
+            <input type="number" class="form-control" id="custic_padding_others" name="custic_padding_others" placeholder="Enter Custic Padding" value="{{old('custic_padding_others')}}">
+          </div>
+          <div class="form-group">
             <label for="yd_correction" class="form-label"> YD Correction </label>
             <input type="number" class="form-control" id="yd_correction" name="yd_correction" placeholder="Enter YD Correction" value="{{old('yd_correction')}}">
           </div>
@@ -197,6 +201,14 @@
             <div class="form-group">
                 <label for="fabric_delivery_mm" class="form-label">Fabric Delivery</label>
                 <input type="number" class="form-control" id="fabric_delivery_mm" name="fabric_delivery_mm" placeholder="Fabric Delivery" value="{{old('fabric_delivery_mm')}}">
+            </div>
+            <div class="form-group">
+                <label for="fabric_delivery_mm_others" class="form-label">Fabric (others)</label>
+                <input type="number" class="form-control" id="fabric_delivery_mm_others" name="fabric_delivery_mm_others" placeholder="Fabric Delivery" value="{{old('fabric_delivery_mm_others')}}">
+            </div>
+            <div class="form-group">
+                <label for="fabric_delivery_mm_commission" class="form-label">Fabric Comission</label>
+                <input type="number" class="form-control" id="fabric_delivery_mm_commission" name="fabric_delivery_mm_commission" placeholder="Fabric Delivery" value="{{old('fabric_delivery_mm_commission')}}">
             </div>
             <div class="form-group">
                 <label for="fabric_delivery_mm_total_month" class="form-label">Total Delivery</label>

@@ -199,53 +199,74 @@
 		</div>
 	</div>
 </div>
+<hr/>
 <div class="row">
 	<div class="col-md-6">
-		<h3 class="text-center border border-primary">
-			Monthly Dyed Yarn Delivery(Outparty)
-		</h3>
+		<h4 class="text-center border border-primary">
+			 Dyed Yarn Delivery(Outparty)
+		</h4>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover border-danger">
 			<tr>
 				<th>Month</th>
-				<th>Total Qty(Kg)</th>
-				<th>Total Qty(Ton)</th>
+				<th>Dyed Yarn Qty(Kg)</th>
+				<th>Total(Ton)</th>
+				<th>AOP (Kg)</th>
+				<th>Total(Ton)</th>
 			</tr>
 			@foreach($monthlyDyedYarnDelivery as $data)
 			<tr>
 				<td>{{$data->month_name}}</td>
 				<td>{{number_format($data->dyedYarnMonthTotal)}}</td>
-				<td>{{number_format($data->dyedYarnMonthTotal/1000)}}</td>
+				<td>{{round($data->dyedYarnMonthTotal/1000, 2)}}</td>
+				<td>{{round($data->AopKnitMonthTotal)}}</td>
+				<td>{{round($data->AopKnitMonthTotal/1000, 2)}}</td>
 			</tr>
 			@endforeach
 			<tr>
-				<td colspan="2">Total</td>
-				<td>{{number_format($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal')/1000)}}</td>
+				<td>Total</td>
+				<td>{{number_format($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal'))}}</td>
+				<td>{{round($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal')/1000, 2)}}</td>
+				<td>{{number_format($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal'))}}</td>
+				<td>{{round($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal')/1000, 2)}}</td>
 			</tr>
 			</table>
 		</div>
 	</div>
 	<div class="col-md-6">
-		<h3 class="text-center border border-primary">
-			Monthly Woven Fabric Delivery(LC + Commision)
-		</h3>
+		<h4 class="text-center border border-primary">
+			Woven Fabric Delivery(LC + Commission + Excess)
+		</h4>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover border-danger">
 			<tr>
 				<th>Month</th>
-				<th>Total Qty(Yds)</th>
+				<th>LC Qty(Yds)</th>
+				<th>Commission Qty(Yds)</th>
+				<th>Others Qty(Yds)</th>
+				<th>AOP(Yds)</th>
 				<th>Total Qty(Lac)</th>
 			</tr>
 			@foreach($monthlyFabricDelivery as $data)
 			<tr>
 				<td>{{$data->month_name}}</td>
 				<td>{{number_format($data->fabricMonthTotal)}}</td>
-				<td>{{round($data->fabricMonthTotal/100000, 2)}}</td>
+				<td>{{number_format($data->fabricMonthTotalCommission)}}</td>
+				<td>{{number_format($data->fabricMonthTotalOthers)}}</td>
+				<td>{{number_format($data->printingWovenMonthTotal)}}</td>
+				@php 
+					$alltotal=$data->fabricMonthTotal + $data->fabricMonthTotalCommission + $data->fabricMonthTotalOthers+$data->printingWovenMonthTotal;
+				@endphp
+				<td>{{round($alltotal/100000, 2)}}</td>
 			</tr>
 			@endforeach
 			<tr>
-				<td colspan="2">Total</td>
+				<td>Total</td>
 				<td>{{round($monthlyFabricDelivery->sum('fabricMonthTotal')/100000, 2)}}</td>
+				<td>{{round($monthlyFabricDelivery->sum('fabricMonthTotalCommission')/100000, 2)}}</td>
+				<td>{{round($monthlyFabricDelivery->sum('fabricMonthTotalOthers')/100000, 2)}}</td>
+				<td>{{round($monthlyFabricDelivery->sum('printingWovenMonthTotal')/100000, 2)}}</td>
+				<td></td>
 			</tr>
 			</table>
 		</div>

@@ -79,6 +79,10 @@
                 <input type="number" class="form-control" id="custic_padding" name="custic_padding" value="{{ $productionShow->custic_padding }}">
               </div>
               <div class="form-group">
+                <label for="custic_padding_others" class="form-label">Custic Others</label>
+                <input type="number" class="form-control" id="custic_padding_others" name="custic_padding_others" value="{{ $productionShow->custic_padding_others }}">
+              </div>
+              <div class="form-group">
                 <label for="yd_correction" class="form-label"> YD Correction </label>
                 <input type="number" class="form-control" id="yd_correction" name="yd_correction" value="{{ $productionShow->yd_correction }}">
               </div>
@@ -205,6 +209,14 @@
                 <div class="form-group">
                     <label for="fabric_delivery_mm" class="form-label">Fabric Delivery</label>
                     <input type="number" class="form-control" id="fabric_delivery_mm" name="fabric_delivery_mm" value="{{$productionShow->fabric_delivery_mm}}">
+                </div>
+                <div class="form-group">
+                    <label for="fabric_delivery_mm_others" class="form-label">Fabric Others</label>
+                    <input type="number" class="form-control" id="fabric_delivery_mm_others" name="fabric_delivery_mm_others" value="{{$productionShow->fabric_delivery_mm_others}}">
+                </div>
+                <div class="form-group">
+                    <label for="fabric_delivery_mm_commission" class="form-label">Fabric Commission</label>
+                    <input type="number" class="form-control" id="fabric_delivery_mm_commission" name="fabric_delivery_mm_commission" value="{{$productionShow->fabric_delivery_mm_commission}}">
                 </div>
                 <div class="form-group">
                     <label for="fabric_delivery_mm_total_month" class="form-label">Total Delivery</label>
