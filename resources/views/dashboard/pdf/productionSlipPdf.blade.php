@@ -8,6 +8,10 @@
 </head>
 <body>
   <style>
+    * {
+      margin: 0;
+      padding: 5;
+    }
     table {
       border-collapse: collapse;
       width: 100%;
@@ -15,8 +19,8 @@
 
     th, td {
       text-align: center;
-      padding: 5px;
-       border: 1px solid;
+      padding: 1px;
+      border: 1px solid;
     }
 
     tr:nth-child(even) {background-color: #f2f2f2;}

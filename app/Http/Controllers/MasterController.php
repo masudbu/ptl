@@ -70,4 +70,22 @@ class MasterController extends Controller
         Excel::import(new DispoImport, request()->file('dispo_upload'));
         return redirect()->back();
     }
+
+    public function machineAddForm(){
+        $machines = DB::table('machines')->get();
+        return view('basic_setup.machine',compact('machines'));    
+    }
+
+    public function machine_add(Request $request){
+
+        $machineInfo = array();
+        $machineInfo['user_id']=auth()->user()->id;
+        $machineInfo['machine_name']=$request->get('machine_name');
+        $machineInfo['machine_code']=$request->get('machine_code');
+        $machineInfo['status']=1;
+        $machineInfo['remarks']=$request->get('remarks');
+
+        DB::table('machines')->insert($machineInfo);
+        return redirect()->back();
+    }
 }

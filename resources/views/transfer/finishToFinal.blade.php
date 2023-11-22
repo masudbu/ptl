@@ -6,45 +6,45 @@
   </div>
   <div class="col-md-8">
     <h2 class="text-center">Finishing To Final Inspection</h2>
-    <form action="" method="psot">
+    <form action="{{route('finishToFinalSave')}}" method="post">
         @csrf
       <div class="row">
         <div class="col-md-9">
           <div class="form-group">
             <label>Transfer Type</label>
-            <input type="text" name="dispo_no" placeholder="Finishing To Final Inspection" class="form-control" disabled>
+            <input type="text" placeholder="Finishing To Final Inspection" class="form-control" disabled>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="buyer_name">Buyer</label>
-            <input type="text" name="buyer_name" id="buyer_name" class="form-control" disabled>
+            <input type="text" name="buyer_name" id="buyer_name" class="form-control">
         </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="dispo_grey_qty">Required Greige(Meter)</label>
-            <input type="number" name="dispo_grey_qty" id="dispo_grey_qty" class="form-control" disabled>
+            <label for="order_qty">Required Greige(Meter)</label>
+            <input type="number" name="order_qty" id="dispo_grey_qty" class="form-control">
         </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="construction">Construction</label>
-            <input type="text" name="construction" id="construction" class="form-control" disabled>
+            <input type="text" name="construction_name" id="construction" class="form-control">
         </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="order_type">Order Type</label>
-            <input type="text" name="order_type" id="order_type" class="form-control" disabled>
+            <input type="text" name="order_type" id="order_type" class="form-control" value="Genral">
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="order_type">Transfer Type</label>
-            <select name="" class="form-control">
+            <label for="transfer_type">Transfer Type</label>
+            <select name="transfer_type" class="form-control">
               <option selected>Fresh</option>
-              <option =InsBack>Inspection Back</option>
+              <option value="InsBack">Inspection Back</option>
             </select>
           </div>
         </div>
@@ -52,31 +52,31 @@
           <div class="form-group">
             <label for="transfer_date">Date & Time</label>
            <!--  <input type="datetime-local" name="transfer_date" class="form-control"> -->
-            <input type="date" name="transfer_date" class="form-control">
+            <input type="date" name="transfer_date" class="form-control" value="{{old('transfer_date')}}">
         </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="dispo_no">Dispo</label>
-            <input type="text" name="dispo_no" id="search" class="form-control" onkeyup="myFunction()">
-        </div>
+            <label for="order_no">Dispo</label>
+            <input type="text" name="order_no" id="search" class="form-control" onkeyup="myFunction()">
+          </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="batch_no">Batch No</label>
-            <input type="text" name="batch_no" class="form-control">
+            <input type="text" name="batch_no" class="form-control" value="B">
         </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="fabric_qty">Qty</label>
-            <input type="text" name="fabric_qty" class="form-control">
+            <label for="transfer_qty">Qty</label>
+            <input type="text" name="transfer_qty" class="form-control">
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="book_no">Book No</label>
-            <input type="text" name="book_no" class="form-control" placeholder="Enter Book No">
+            <input type="text" name="book_no" class="form-control" value="Test">
           </div>
         </div>
         <div class="col-md-3">
@@ -97,6 +97,25 @@
                 @endif
             </select>
           </div>
+        </div>        
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="last_machine">Machine</label>
+            <select class="form-control" required name="last_machine" id="last_machine">
+                <option value="">Select one</option>
+                @if(isset($machines))
+                @foreach($machines as $value)
+                <option value="{{$value->id}}">{{$value->machine_name}}</option>
+                @endforeach
+                @endif
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <br/>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+          </div>
         </div>
         <div class="col-md-12">
           <div class="form-group">
@@ -110,6 +129,30 @@
   <div class="col-md-2">
   </div>
 </div>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <table class="table table-bordered">
+      <thead>
+        <th>SL</th>
+        <th>Dispo</th>
+        <th>Buyer</th>
+        <th>Transfer Date</th>
+        <th>Transfer Qty</th>
+      </thead>
+      @foreach($finish_to_final as $data)
+      <tr>
+        <td>{{$loop->iteration}}</td>
+        <td>{{$data->order_no}}</td>
+        <td>{{$data->buyer_name}}</td>
+        <td>{{$data->transfer_date}}</td>
+        <td>{{$data->transfer_qty}}</td>
+      </tr>
+      @endforeach
+    </table>
+  </div>
+  <div class="col-md-2"></div>
+</div>
 <script type="text/javascript">
 
  function myFunction() {
@@ -119,11 +162,9 @@
       url : '{{URL::to('search')}}',
       data:{'search':x},
       success:function(data){
-        //var obj = JSON.parse(data);
-        //console.log(data);
-      $('#buyer_name').val(data.buyer);
-      $('#construction').val(data.construction);
-      $('#order_type').val(data.order_type);
+      $('#buyer_name').val(data.End_Buyer);
+      $('#construction').val(data.Construction);
+      $('#order_type').val("General");
       $('#dispo_grey_qty').val(data.dispo_grey_qty);
       }
     });

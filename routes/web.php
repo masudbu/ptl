@@ -81,6 +81,10 @@ Route::get('/department-create', [App\Http\Controllers\MasterController::class, 
 Route::post('/department-add', [App\Http\Controllers\MasterController::class, 'department_add'])->name('departmentAdd');
 Route::get('/add-process', [App\Http\Controllers\MasterController::class, 'index'])->name('processForm');
 Route::post('/process-add', [App\Http\Controllers\MasterController::class, 'process_add'])->name('processAdd');
+
+//Add Machine 
+Route::get('/machine-form', [App\Http\Controllers\MasterController::class, 'machineAddForm'])->name('machineForm');
+Route::post('/machine-add', [App\Http\Controllers\MasterController::class, 'machine_add'])->name('machineAdd');
 //Daily Dispo Upload
 Route::get('/dispo-upload-form', [App\Http\Controllers\MasterController::class, 'dailyDispoForm'])->name('dispo_upload_form');
 Route::post('/dispo-upload', [App\Http\Controllers\MasterController::class, 'daily_dispo_import'])->name('dispo_upload');
@@ -89,3 +93,7 @@ Route::post('/dispo-upload', [App\Http\Controllers\MasterController::class, 'dai
 Route::get('/finish-to-final',[App\Http\Controllers\TransferController::class, 'index'])->name('finishToFinal');
 //search from json data
 Route::get('/search', [App\Http\Controllers\TransferController::class, 'search'])->name('search');
+Route::post('/finish-to-final-save',[App\Http\Controllers\TransferController::class, 'finishToFinalTransfer'])->name('finishToFinalSave');
+
+Route::get('/routecard', [App\Http\Controllers\RoutecardController::class, 'index'])->name('routecard');
+Route::get('/routecard-print', [App\Http\Controllers\RoutecardController::class, 'route_card_print'])->name('routecardprint');

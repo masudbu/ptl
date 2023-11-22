@@ -114,13 +114,13 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="{{route('finishToFinal')}}" class="menu-link" target="_blank">
+            <a href="{{route('finishToFinal')}}" class="menu-link">
               <div data-i18n="Basic">Finishing To Final</div>
             </a>
           </li>
         </ul>
       </li>
-      <li class="menu-item {{ (request()->is('department-create','add-process','dispo-upload-form')) ? 'open' : '' }}">
+      <li class="menu-item {{ (request()->is('department-create','add-process','dispo-upload-form','machine-form')) ? 'open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>
           <div data-i18n="Misc">Master Setup</div>
@@ -131,6 +131,11 @@
               <div data-i18n="Error">Department</div>
             </a>
           </li>
+          <li class="menu-item {{ (request()->is('machine-form')) ? 'active' : '' }}">
+            <a href="{{route('machineForm')}}" class="menu-link">
+              <div data-i18n="Error">Machines</div>
+            </a>
+          </li>
           <li class="menu-item {{ (request()->is('add-process')) ? 'active' : '' }}">
             <a href="{{route('processForm')}}" class="menu-link">
               <div data-i18n="Under Maintenance">Process</div>
@@ -139,6 +144,11 @@
           <li class="menu-item {{ (request()->is('dispo-upload-form')) ? 'active' : '' }}">
             <a href="{{route('dispo_upload_form')}}" class="menu-link">
               <div data-i18n="Under Maintenance">Dispo Upload</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{route('routecard')}}" class="menu-link">
+              <div data-i18n="Under Maintenance">Route Card</div>
             </a>
           </li>
         </ul>

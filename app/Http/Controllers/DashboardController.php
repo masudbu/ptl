@@ -153,7 +153,7 @@ class DashboardController extends Controller
             'productionSlip' => $productionSlip
         ]; 
         
-        $pdf = PDF::loadView('dashboard.pdf.productionSlipPdf', $data);
+        $pdf = PDF::loadView('dashboard.pdf.productionSlipPdf', $data)->setPaper('legal', 'landscape');
      
         //return $pdf->download('productionSlip.pdf');
         return $pdf->stream('productionSlip.pdf');
