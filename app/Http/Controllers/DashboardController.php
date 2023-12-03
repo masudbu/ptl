@@ -52,11 +52,31 @@ class DashboardController extends Controller
             ->groupBy('month_name')
             ->orderBy('production_date','ASC')
             ->get();
+
+        //get monthly greige fabric inspection
+        $monthlyGreigeInspection = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(greige_inspection) as greigeInspectionMonthTotal, SUM(greige_inspection_outparty) as greigeOutpartyMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+             //get monthly Weaving Production
+        $monthlyWeaving = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(warping) as warpingMonthTotal, SUM(sizing) as sizingMonthTotal, SUM(weaving) as weavingMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
         //dd($items);
-         //Carbon::now()->month
+        //Carbon::now()->month
       
         $productionShortReview = Production::select('*')->orderBy('production_date','desc')->get()->first();
-        return view('dashboard.home', compact('productionShortReview','monthlyYDProduction','monthlyDyedYarnDelivery','monthlyFabricDelivery'));
+        return view('dashboard.home', compact('productionShortReview','monthlyYDProduction','monthlyDyedYarnDelivery','monthlyFabricDelivery','monthlyGreigeInspection','monthlyWeaving'));
     }
     public function dailyProductionEntryForm(){
         return view('dashboard.dailyProductionEntryForm');

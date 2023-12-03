@@ -207,29 +207,29 @@
 		</h4>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover border-danger">
-			<tr>
-				<th>Month</th>
-				<th>Dyed Yarn Qty(Kg)</th>
-				<th>Total(Ton)</th>
-				<th>AOP (Kg)</th>
-				<th>Total(Ton)</th>
-			</tr>
-			@foreach($monthlyDyedYarnDelivery as $data)
-			<tr>
-				<td>{{$data->month_name}}</td>
-				<td>{{number_format($data->dyedYarnMonthTotal)}}</td>
-				<td>{{round($data->dyedYarnMonthTotal/1000, 2)}}</td>
-				<td>{{round($data->AopKnitMonthTotal)}}</td>
-				<td>{{round($data->AopKnitMonthTotal/1000, 2)}}</td>
-			</tr>
-			@endforeach
-			<tr>
-				<td>Total</td>
-				<td>{{number_format($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal'))}}</td>
-				<td>{{round($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal')/1000, 2)}}</td>
-				<td>{{number_format($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal'))}}</td>
-				<td>{{round($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal')/1000, 2)}}</td>
-			</tr>
+				<tr>
+					<th>Month</th>
+					<th>Dyed Yarn Qty(Kg)</th>
+					<th>Total(Ton)</th>
+					<th>AOP (Kg)</th>
+					<th>Total(Ton)</th>
+				</tr>
+				@foreach($monthlyDyedYarnDelivery as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->dyedYarnMonthTotal)}}</td>
+					<td>{{round($data->dyedYarnMonthTotal/1000, 2)}}</td>
+					<td>{{round($data->AopKnitMonthTotal)}}</td>
+					<td>{{round($data->AopKnitMonthTotal/1000, 2)}}</td>
+				</tr>
+				@endforeach
+				<tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal'))}}</td>
+					<td>{{round($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal')/1000, 2)}}</td>
+					<td>{{number_format($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal'))}}</td>
+					<td>{{round($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal')/1000, 2)}}</td>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -243,7 +243,7 @@
 				<th>Month</th>
 				<th>LC Qty(Yds)</th>
 				<th>Commission Qty(Yds)</th>
-				<th>Others Qty(Yds)</th>
+				<th>PO Excess Qty(Yds)</th>
 				<th>AOP(Yds)</th>
 				<th>Total Qty(Lac)</th>
 			</tr>
@@ -271,6 +271,61 @@
 			</table>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 Greige Inspection Production Table-23
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Inhouse</th>
+					<th>OutSite</th>
+					<th>Total(MTR)</th>
+				</tr>
+				@foreach($monthlyGreigeInspection as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{round($data->greigeInspectionMonthTotal)}}</td>
+					<td>{{round($data->greigeOutpartyMonthTotal)}}</td>
+					<td>{{round($data->greigeInspectionMonthTotal+$data->greigeOutpartyMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				<tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyGreigeInspection->sum('greigeInspectionMonthTotal'))}}</td>
+					<td>{{number_format($monthlyGreigeInspection->sum('greigeOutpartyMonthTotal'))}}</td>
+					<td>{{number_format($monthlyGreigeInspection->sum('greigeInspectionMonthTotal')+$monthlyGreigeInspection->sum('greigeOutpartyMonthTotal'))}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 Weaving Production Table-23
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Warping</th>
+					<th>Sizing</th>
+					<th>Weaving</th>
+				</tr>
+				@foreach($monthlyWeaving as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->warpingMonthTotal)}}</td>
+					<td>{{number_format($data->sizingMonthTotal)}}</td>
+					<td>{{number_format($data->weavingMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyWeaving->sum('warpingMonthTotal'))}}</td>
+					<td>{{number_format($monthlyWeaving->sum('sizingMonthTotal'))}}</td>
+					<td>{{number_format($monthlyWeaving->sum('weavingMonthTotal'))}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </div>
 @endsection
-
