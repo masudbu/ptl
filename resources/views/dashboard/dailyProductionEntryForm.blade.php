@@ -11,14 +11,23 @@
                 <input type="date" class="form-control" id="production_date" name="production_date">
             </div>
             <div class="form-group">
-                <label for="yarndyeing" class="form-label">Yarn Dyeing</label>
-                <input type="number" class="form-control" id="yarndyeing" name="yarndyeing" placeholder="Enter Yarn Dyeing Production" value="{{old('yarndyeing')}}">
+                <label for="yarndyeing" class="form-label">YD Inhouse</label>
+                <input type="number" class="form-control" id="yarndyeing" name="yarndyeing" placeholder=" YD Inhouse" value="{{old('yarndyeing')}}">
                 @error('yarndyeing')
                 <div class="alert alert-danger">
                     {{$message}}
                 </div>
                 @enderror
-              </div>
+            </div>
+            <div class="form-group">
+                <label for="yarndyeing_outparty" class="form-label">YD Outparty</label>
+                <input type="number" class="form-control" id="yarndyeing_outparty" name="yarndyeing_outparty" placeholder="Dyeing Outparty" value="{{old('yarndyeing_outparty')}}">
+                @error('yarndyeing_outparty')
+                <div class="alert alert-danger">
+                    {{$message}}
+                </div>
+                @enderror
+            </div>
           <div class="form-group">
             <label for="warping" class="form-label">Warping</label>
             <input type="number" class="form-control" id="warping" name="warping" placeholder="Enter Warping Production" value="1">
@@ -39,12 +48,16 @@
           </div>
           <div class="form-group">
             <label for="weaving" class="form-label">Weaving</label>
-            <input type="number" class="form-control" id="weaving" name="weaving" placeholder="Enter Weaving Production" value="1">
+            <input type="number" class="form-control" id="weaving" name="weaving" placeholder="Weaving Inhouse" value="1">
             @error('weaving')
             <div class="alert alert-danger">
                 {{$message}}
             </div>
             @enderror
+          </div>
+          <div class="form-group">
+            <label for="weaving_outsite" class="form-label">Weaving Outsite</label>
+            <input type="number" class="form-control" id="weaving_outsite" name="weaving_outsite" placeholder="Loom Outsite">
           </div>
           <div class="form-group">
             <label for="Pretreatment" class="form-label">Sing/Desize</label>
@@ -132,6 +145,14 @@
                 <label for="washing3_goller_sd_others" class="form-label"> Washing 3</label>
                 <input type="number" class="form-control" id="washing3_goller_sd_others" name="washing3_goller_sd_others" placeholder="Enter Others" value="{{old('washing3_goller_sd_others')}}">
             </div>
+             <div class="form-group">
+                <label for="greige_inspection" class="form-label"> Greige Inspection</label>
+                <input type="number" class="form-control" id="greige_inspection" name="greige_inspection" placeholder="Greige Ins" value="{{old('greige_inspection')}}">
+            </div>
+            <div class="form-group">
+                <label for="greige_inspection_outparty" class="form-label">Ins Outparty</label>
+                <input type="number" class="form-control" id="greige_inspection_outparty" name="greige_inspection_outparty" placeholder="Greige Outparty" value="{{old('greige_inspection_outparty')}}">
+            </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
@@ -154,15 +175,58 @@
                 Knit) </label>
                 <input type="number" class="form-control" id="softflow_knit_others" name="softflow_knit_others" placeholder="SoftFlow Others" value="{{old('softflow_knit_others')}}">
             </div>
-            
+
+           
+
+            <!---AOP Entry-->
             <div class="form-group">
-                <label for="greige_inspection" class="form-label"> Greige Inspection</label>
-                <input type="number" class="form-control" id="greige_inspection" name="greige_inspection" placeholder="Greige Ins" value="{{old('greige_inspection')}}">
+                <label for="aop_flatbed_print_knit" class="form-label">AOP(Flatbed KG)</label>
+                <input type="number" class="form-control" id="aop_flatbed_print_knit" name="aop_flatbed_print_knit" placeholder="Flatbed KG" value="{{old('aop_flatbed_print_knit')}}">
             </div>
             <div class="form-group">
-                <label for="greige_inspection_outparty" class="form-label">Ins Outparty</label>
-                <input type="number" class="form-control" id="greige_inspection_outparty" name="greige_inspection_outparty" placeholder="Greige Outparty" value="{{old('greige_inspection_outparty')}}">
+                <label for="aop_flatbed_print_woven" class="form-label">AOP(Flatbed MTR)</label>
+                <input type="number" class="form-control" id="aop_flatbed_print_woven" name="aop_flatbed_print_woven" placeholder="Flatbed MTR" value="{{old('aop_flatbed_print_woven')}}">
             </div>
+             <div class="form-group">
+                <label for="aop_flatbed_print_outsite_woven" class="form-label">AOP(Flatbed Yds)</label>
+                <input type="number" class="form-control" id="aop_flatbed_print_outsite_woven" name="aop_flatbed_print_outsite_woven" placeholder="Flatbed Yds" value="{{old('aop_flatbed_print_outsite_woven')}}">
+            </div>
+
+            <div class="form-group">
+                <label for="aop_rotary_print_knit" class="form-label">AOP(Rotary KG)</label>
+                <input type="number" class="form-control" id="aop_rotary_print_knit" name="aop_rotary_print_knit" placeholder="Rotary KG" value="{{old('aop_rotary_print_knit')}}">
+            </div>
+            <div class="form-group">
+                <label for="aop_rotary_print_woven" class="form-label">AOP(Rotary MTR)</label>
+                <input type="number" class="form-control" id="aop_rotary_print_woven" name="aop_rotary_print_woven" placeholder="Rotary MTR" value="{{old('aop_rotary_print_woven')}}">
+            </div>
+             <div class="form-group">
+                <label for="aop_rotary_print_outsite_woven" class="form-label">AOP(Rotary Yds)</label>
+                <input type="number" class="form-control" id="aop_rotary_print_outsite_woven" name="aop_rotary_print_outsite_woven" placeholder="Rotary Yds" value="{{old('aop_rotary_print_outsite_woven')}}">
+            </div>
+
+            <div class="form-group">
+                <label for="aop_digital_print_knit" class="form-label">AOP(Digital KG)</label>
+                <input type="number" class="form-control" id="aop_digital_print_knit" name="aop_digital_print_knit" placeholder="Digital KG" value="{{old('aop_digital_print_knit')}}">
+            </div>
+            <div class="form-group">
+                <label for="aop_digital_print_woven" class="form-label">AOP(Digital MTR)</label>
+                <input type="number" class="form-control" id="aop_digital_print_woven" name="aop_digital_print_woven" placeholder="Digital MTR" value="{{old('aop_digital_print_woven')}}">
+            </div>
+             <div class="form-group">
+                <label for="aop_digital_print_outsite_woven" class="form-label">AOP(Digital Yds)</label>
+                <input type="number" class="form-control" id="aop_digital_print_outsite_woven" name="aop_digital_print_outsite_woven" placeholder="Digital Yds" value="{{old('aop_digital_print_outsite_woven')}}">
+            </div>
+
+            <div class="form-group">
+                <label for="aop_rotary_baby_knit" class="form-label">AOP(Baby(Rotary KG))</label>
+                <input type="number" class="form-control" id="aop_rotary_baby_knit" name="aop_rotary_baby_knit" placeholder="Baby KG" value="{{old('aop_rotary_baby_knit')}}">
+            </div>
+             <div class="form-group">
+                <label for="aop_rotary_baby_woven" class="form-label">AOP(Baby(Rotary YDS))</label>
+                <input type="number" class="form-control" id="aop_rotary_baby_woven" name="aop_rotary_baby_woven" placeholder="Baby YDS" value="{{old('aop_rotary_baby_woven')}}">
+            </div>
+
         </div>
         <div class="col-md-3">
             <div class="form-group">
@@ -197,6 +261,17 @@
             <div class="form-group">
                 <label for="printing_woven_mm_total_month" class="form-label">Total(Woven)</label>
                 <input type="number" class="form-control" id="printing_woven_mm_total_month" name="printing_woven_mm_total_month" placeholder="Delivery Woven" value="{{old('printing_woven_mm_total_month')}}">
+            </div>
+            <div class="form-group">
+                <label for="softflow_knit_delivery_grey" class="form-label"> CSD(
+                Delivery Grey) </label>
+                <input type="number" class="form-control" id="softflow_knit_delivery_grey" name="softflow_knit_delivery_grey" placeholder="Grey Delivery" value="{{old('softflow_knit_delivery_grey')}}">
+            </div>
+
+             <div class="form-group">
+                <label for="softflow_knit_delivery_finish" class="form-label"> CSD(
+                Delivery Finish) </label>
+                <input type="number" class="form-control" id="softflow_knit_delivery_finish" name="softflow_knit_delivery_finish" placeholder="Finish Delivery" value="{{old('softflow_knit_delivery_finish')}}">
             </div>
             <div class="form-group">
                 <label for="fabric_delivery_mm" class="form-label">Fabric Delivery</label>

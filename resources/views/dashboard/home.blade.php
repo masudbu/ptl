@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 @section('main')
 <div class="row">
-	<div class="col-sm-7">
+	<div class="col-sm-12">
 		<h3 class="text-center border border-primary">
 			Production Summary of : {{$productionShortReview->production_date}}
 		</h3>
@@ -167,33 +167,56 @@
 		    </table> 
 		</div>
 	</div>
-	<div class="col-sm-5">
+	<div class="col-sm-6">
 		<h3 class="text-center border border-primary">
-			Yarn Dyeing Production Table - 2023
+			Yarn Dyeing Table - 2024
 		</h3>
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover border-danger">
-			<tr>
-				<th>Month</th>
-				<th>Total Qty(Kg)</th>
-				<th>Total Qty(Ton)</th>
-			</tr>
-			@foreach($monthlyYDProduction as $data)
-			<tr>
-				<td>{{$data->month_name}}</td>
-				<td>{{number_format($data->yarndyeingMonthTotal)}}</td>
-				<td>{{number_format($data->yarndyeingMonthTotal/1000)}}</td>
-			</tr>
-			@endforeach
-			<tr>
-				<td colspan="2">Total</td>
-				<td>{{number_format($monthlyYDProduction->sum('yarndyeingMonthTotal')/1000)}}</td>
-			</tr>
+				<tr>
+					<th>Month</th>
+					<th>Dyeing Inhouse(KG)</th>
+					<th>Dyeing Outparty(KG)</th>
+					<th>Dyeing(Ton)</th>
+					<th>Delivery Party(KG)</th>
+					<th>Delivery Party(Ton)</th>
+				</tr>
+				@foreach($monthlyYDProduction as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->yarndyeingMonthTotal)}}</td>
+					<td>{{number_format($data->yarndyeing_outpartyMonthTotal)}}</td>
+					<td>{{number_format(($data->yarndyeingMonthTotal + $data->yarndyeing_outpartyMonthTotal)/1000)}}</td>
+
+					<td>{{number_format($data->dyedYarnMonthTotal)}}</td>
+					<td>{{round($data->dyedYarnMonthTotal/1000)}}</td>
+				</tr>
+				@endforeach
+				<tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyYDProduction->sum('yarndyeingMonthTotal')/1000)}}</td>
+					<td>
+						{{number_format($monthlyYDProduction->sum('yarndyeing_outpartyMonthTotal')/1000)}}
+					</td>
+					@php 
+						$totalInhouse = $monthlyYDProduction->sum('dyedYarnMonthTotal');
+						$totalOutsite = $monthlyYDProduction->sum('yarndyeing_outpartyMonthTotal');
+					@endphp
+					<td>{{number_format($totalInhouse + $totalOutsite)}}</td>
+					<td colspan="2">
+						{{number_format($monthlyYDProduction->sum('dyedYarnMonthTotal')/1000)}}
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-6">
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 		<div class="chart-container">
 			<div class="chart has-fixed-height" id="chart"></div>
 		</div>
@@ -203,39 +226,39 @@
 <div class="row">
 	<div class="col-md-6">
 		<h4 class="text-center border border-primary">
-			 Dyed Yarn Delivery(Outparty)
+			AOP Delivery(Outparty) Table - 2024
 		</h4>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover border-danger">
 				<tr>
 					<th>Month</th>
-					<th>Dyed Yarn Qty(Kg)</th>
-					<th>Total(Ton)</th>
+					<th>AOP(Yds)</th>
+					<th>Total(Lac)</th>
 					<th>AOP (Kg)</th>
 					<th>Total(Ton)</th>
 				</tr>
-				@foreach($monthlyDyedYarnDelivery as $data)
+				@foreach($monthlyAOPDelivery as $data)
 				<tr>
 					<td>{{$data->month_name}}</td>
-					<td>{{number_format($data->dyedYarnMonthTotal)}}</td>
-					<td>{{round($data->dyedYarnMonthTotal/1000, 2)}}</td>
-					<td>{{round($data->AopKnitMonthTotal)}}</td>
+					<td>{{number_format($data->printingWovenMonthTotal)}}</td>
+					<td>{{round($data->printingWovenMonthTotal/100000, 2)}}</td>
+					<td>{{number_format($data->AopKnitMonthTotal)}}</td>
 					<td>{{round($data->AopKnitMonthTotal/1000, 2)}}</td>
 				</tr>
 				@endforeach
 				<tr>
 					<td>Total</td>
-					<td>{{number_format($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal'))}}</td>
-					<td>{{round($monthlyDyedYarnDelivery->sum('dyedYarnMonthTotal')/1000, 2)}}</td>
-					<td>{{number_format($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal'))}}</td>
-					<td>{{round($monthlyDyedYarnDelivery->sum('AopKnitMonthTotal')/1000, 2)}}</td>
+					<td>{{number_format($monthlyAOPDelivery->sum('printingWovenMonthTotal'))}}</td>
+					<td>{{round($monthlyAOPDelivery->sum('printingWovenMonthTotal')/100000, 2)}}</td>
+					<td>{{number_format($monthlyAOPDelivery->sum('AopKnitMonthTotal'))}}</td>
+					<td>{{round($monthlyAOPDelivery->sum('AopKnitMonthTotal')/1000, 2)}}</td>
 				</tr>
 			</table>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<h4 class="text-center border border-primary">
-			Woven Fabric Delivery(LC + Commission + Excess)
+			Woven Fabric Delivery(LC + Commission + Excess + APO(Woven))
 		</h4>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover border-danger">
@@ -274,41 +297,55 @@
 	<div class="row">
 		<div class="col-md-6">
 			<h4 class="text-center border border-primary">
-			 Greige Inspection Production Table-23
+			 Greige Inspection Production Table-24
 			</h4>
 			<table class="table table-bordered table-hover border-danger">
 				<tr>
 					<th>Month</th>
-					<th>Inhouse</th>
+					<th>Inhouse(mtr)</th>
 					<th>OutSite</th>
-					<th>Total(MTR)</th>
+					<th>Total(Lac)</th>
 				</tr>
 				@foreach($monthlyGreigeInspection as $data)
 				<tr>
 					<td>{{$data->month_name}}</td>
-					<td>{{round($data->greigeInspectionMonthTotal)}}</td>
-					<td>{{round($data->greigeOutpartyMonthTotal)}}</td>
-					<td>{{round($data->greigeInspectionMonthTotal+$data->greigeOutpartyMonthTotal)}}</td>
+					<td>{{number_format($data->greigeInspectionMonthTotal)}}</td>
+					<td>{{number_format($data->greigeOutpartyMonthTotal)}}</td> 
+					@php
+
+					$total_greigeIns = $data->greigeInspectionMonthTotal + $data->greigeOutpartyMonthTotal;
+
+					@endphp
+					<td>{{round($total_greigeIns/100000)}}</td>
 				</tr>
 				@endforeach
 				<tr>
 					<td>Total</td>
-					<td>{{number_format($monthlyGreigeInspection->sum('greigeInspectionMonthTotal'))}}</td>
-					<td>{{number_format($monthlyGreigeInspection->sum('greigeOutpartyMonthTotal'))}}</td>
-					<td>{{number_format($monthlyGreigeInspection->sum('greigeInspectionMonthTotal')+$monthlyGreigeInspection->sum('greigeOutpartyMonthTotal'))}}</td>
+					<td>
+						{{number_format($monthlyGreigeInspection->sum('greigeInspectionMonthTotal'))}}
+					</td>
+					<td>
+						{{number_format($monthlyGreigeInspection->sum('greigeOutpartyMonthTotal'))}}
+					</td> 
+					@php
+						$totalmonthlyIns=$monthlyGreigeInspection->sum('greigeInspectionMonthTotal') + $monthlyGreigeInspection->sum('greigeOutpartyMonthTotal');
+					@endphp
+					<td>
+						{{round($totalmonthlyIns/100000)}}
+					</td>
 				</tr>
 			</table>
 		</div>
 		<div class="col-md-6">
 			<h4 class="text-center border border-primary">
-			 Weaving Production Table-23
+			 Weaving Production Table-24
 			</h4>
 			<table class="table table-bordered table-hover border-danger">
 				<tr>
-					<th>Month</th>
-					<th>Warping</th>
-					<th>Sizing</th>
-					<th>Weaving</th>
+					<th>Month(M)</th>
+					<th>Warping(M)</th>
+					<th>Sizing(M)</th>
+					<th>Weaving(M)</th>
 				</tr>
 				@foreach($monthlyWeaving as $data)
 				<tr>
@@ -320,9 +357,184 @@
 				@endforeach
 				 <tr>
 					<td>Total</td>
-					<td>{{number_format($monthlyWeaving->sum('warpingMonthTotal'))}}</td>
-					<td>{{number_format($monthlyWeaving->sum('sizingMonthTotal'))}}</td>
-					<td>{{number_format($monthlyWeaving->sum('weavingMonthTotal'))}}</td>
+					<td>{{number_format($monthlyWeaving->sum('warpingMonthTotal')/100000)}} Lac</td>
+					<td>{{number_format($monthlyWeaving->sum('sizingMonthTotal')/100000)}} Lac</td>
+					<td>{{number_format($monthlyWeaving->sum('weavingMonthTotal')/100000)}} Lac</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 Pretreatment Production Table-24
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Pretreatment</th>
+					<th>Others</th>
+					<th>Mercerize</th>
+				</tr>
+				@foreach($monthlyPretreatment as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->pretreatmentMonthTotal)}}</td>
+					<td>{{number_format($data->pretreatmentOthersgMonthTotal)}}</td>
+					<td>{{number_format($data->mercerizeMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentOthersgMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('mercerizeMonthTotal'))}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 Solid Dyeing Production Table-24
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Cpb</th>
+					<th>Others</th>
+					<th>Thermosol</th>
+					<th>Others</th>
+				</tr>
+				@foreach($monthlySolidDyeing as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->cpbMonthTotal)}}</td>
+					<td>{{number_format($data->cpbOthersgMonthTotal)}}</td>
+					<td>{{number_format($data->thermosolMonthTotal)}}</td>
+					<td>{{number_format($data->thermosolOthersMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <!-- <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentOthersgMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('mercerizeMonthTotal'))}}</td>
+				</tr> -->
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 Finishing Production Table-24
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>CSR</th>
+					<th>Others</th>
+					
+				</tr>
+				@foreach($monthlySanforizing as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->sanforizingMonthTotal)}}</td>
+					<td>{{number_format($data->sanforizingOthersgMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <!-- <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentOthersgMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('mercerizeMonthTotal'))}}</td>
+				</tr> -->
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 SoftFlow Production Table-24
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Woven</th>
+					<th>Others</th>
+					<th>Knit</th>
+					<th>Others</th>
+				</tr>
+				@foreach($monthlySoftFlow as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->softflow_wovenMonthTotal)}}</td>
+					<td>{{number_format($data->softflow_wovenOthersgMonthTotal)}}</td>
+					<td>{{number_format($data->softflow_knitMonthTotal)}}</td>
+					<td>{{number_format($data->softflow_knitOthersgMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <!-- <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentOthersgMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('mercerizeMonthTotal'))}}</td>
+				</tr> -->
+			</table>
+		</div>
+		<div class="col-md-12">
+			<h4 class="text-center border border-primary">
+			 AOP Production Table-24
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Rotary KG</th>
+					<th>Rotary M</th>
+					<th>Rotary YDS</th>
+					<th>Flatbed KG</th>
+					<th>Flatbed M</th>
+					<th>Flatbed YDS</th>
+					<th>Digital KG</th>
+					<th>Digital M</th>
+					<th>Digital YDS</th>
+					
+				</tr>
+				@foreach($monthlyAOP as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->aop_rotary_print_knitMonthTotal)}}</td>
+					<td>{{number_format($data->aop_rotary_print_wovenMonthTotal)}}</td>
+					<td>{{number_format($data->aop_rotary_print_outsite_wovenMonthTotal)}}</td>
+					<td>{{number_format($data->aop_flatbed_print_knitMonthTotal)}}</td>
+					<td>{{number_format($data->aop_flatbed_print_wovenMonthTotal)}}</td>
+					<td>{{number_format($data->aop_flatbed_print_outsite_wovenMonthTotal)}}</td>
+					<td>{{number_format($data->aop_digital_print_knitMonthTotal)}}</td>
+					<td>{{number_format($data->aop_digital_print_wovenMonthTotal)}}</td>
+					<td>{{number_format($data->aop_digital_print_outsite_wovenMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <!-- <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('pretreatmentOthersgMonthTotal'))}}</td>
+					<td>{{number_format($monthlyPretreatment->sum('mercerizeMonthTotal'))}}</td>
+				</tr> -->
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h4 class="text-center border border-primary">
+			 Final Inspection Production Table-24
+			</h4>
+			<table class="table table-bordered table-hover border-danger">
+				<tr>
+					<th>Month</th>
+					<th>Pretreatment</th>
+					<th>Others</th>
+				</tr>
+				@foreach($monthlyFinalInspection as $data)
+				<tr>
+					<td>{{$data->month_name}}</td>
+					<td>{{number_format($data->finalInspectionMonthTotal)}}</td>
+					<td>{{number_format($data->finaltOthersgMonthTotal)}}</td>
+				</tr>
+				@endforeach
+				 <tr>
+					<td>Total</td>
+					<td>{{number_format($monthlyFinalInspection->sum('finalInspectionMonthTotal'))}}</td>
+					<td>{{number_format($monthlyFinalInspection->sum('finaltOthersgMonthTotal'))}}</td>
 				</tr>
 			</table>
 		</div>

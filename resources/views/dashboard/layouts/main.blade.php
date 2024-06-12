@@ -120,7 +120,7 @@
             name: 'YD',
             data: [
             @foreach($monthlyYDProduction as $data)
-              {{number_format($data['yarndyeingMonthTotal']/1000)}},
+              {{number_format(($data['yarndyeingMonthTotal'] + $data['yarndyeing_outpartyMonthTotal'])/1000)}},
             @endforeach
             ]
           }],
@@ -189,7 +189,7 @@
           
           },
           title: {
-            text: 'Yarn Dyeing Production Chart-2023 (Ton)',
+            text: 'Yarn Dyeing Production Chart-2024 (MUnit - Ton)',
             floating: true,
             offsetY: 330,
             align: 'center',

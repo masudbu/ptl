@@ -24,7 +24,7 @@ class DashboardController extends Controller
         //get monthly yarn dyeing production
        $monthlyYDProduction = Production::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("MONTHNAME(production_date) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(yarndyeing) as yarndyeingMonthTotal, SUM(yarndyeing_outparty) as yarndyeing_outpartyMonthTotal, SUM(yd_outparty_mm) as dyedYarnMonthTotal"),
             )
             ->whereYear('production_date', date('Y'))
             ->groupBy('month_name')
@@ -33,10 +33,10 @@ class DashboardController extends Controller
 
             
 
-        //get monthly Dyed Yarn Delivery
-        $monthlyDyedYarnDelivery = Production::select(
+        //get monthly AOP Delivery Outparty
+        $monthlyAOPDelivery = Production::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("MONTHNAME(production_date) as month_name, SUM(yd_outparty_mm) as dyedYarnMonthTotal,SUM(printing_knit_mm) as AopKnitMonthTotal"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(printing_woven_mm) as printingWovenMonthTotal,SUM(printing_knit_mm) as AopKnitMonthTotal"),
             )
             ->whereYear('production_date', date('Y'))
             ->groupBy('month_name')
@@ -48,7 +48,7 @@ class DashboardController extends Controller
             DB::raw("(COUNT(*)) as count"),
             DB::raw("MONTHNAME(production_date) as month_name, SUM(fabric_delivery_mm) as fabricMonthTotal, SUM(fabric_delivery_mm_others) as fabricMonthTotalOthers,SUM(fabric_delivery_mm_commission) as fabricMonthTotalCommission,SUM(printing_woven_mm) as printingWovenMonthTotal"),
             )
-            ->whereYear('production_date', date('Y'))
+            ->whereYear('production_date',  date('Y'))
             ->groupBy('month_name')
             ->orderBy('production_date','ASC')
             ->get();
@@ -72,11 +72,71 @@ class DashboardController extends Controller
             ->groupBy('month_name')
             ->orderBy('production_date','ASC')
             ->get();
+
+        //get monthly Pretreatment Production
+        $monthlyPretreatment = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(pretreatment) as pretreatmentMonthTotal, SUM(pretreatment_others) as pretreatmentOthersgMonthTotal, SUM(mercerize) as mercerizeMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+        //get monthly Solid Dyeing Production
+        $monthlySolidDyeing = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(cpb) as cpbMonthTotal, SUM(cpb_others) as cpbOthersgMonthTotal, SUM(thermosol) as thermosolMonthTotal,SUM(thermosol_others) as thermosolOthersMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+        //get monthly CSR Production
+        $monthlySanforizing = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(sanforizing) as sanforizingMonthTotal, SUM(sanforizing_others) as sanforizingOthersgMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+         //get monthly SoftFlow Production
+        $monthlySoftFlow = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(softflow_woven) as softflow_wovenMonthTotal, SUM(softflow_woven_others) as softflow_wovenOthersgMonthTotal,SUM(softflow_knit) as softflow_knitMonthTotal, SUM(softflow_knit_others) as softflow_knitOthersgMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+          //get monthly AOP Production
+        $monthlyAOP = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(aop_flatbed_print_knit) as aop_flatbed_print_knitMonthTotal, SUM(aop_flatbed_print_woven) as aop_flatbed_print_wovenMonthTotal,SUM(aop_flatbed_print_outsite_woven) as aop_flatbed_print_outsite_wovenMonthTotal, SUM(aop_rotary_print_knit) as aop_rotary_print_knitMonthTotal,SUM(aop_rotary_print_woven) as aop_rotary_print_wovenMonthTotal,SUM(aop_rotary_print_outsite_woven) as aop_rotary_print_outsite_wovenMonthTotal,SUM(aop_digital_print_knit) as aop_digital_print_knitMonthTotal,SUM(aop_digital_print_woven) as aop_digital_print_wovenMonthTotal,SUM(aop_digital_print_outsite_woven) as aop_digital_print_outsite_wovenMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
+
+        //get monthly Final Ins Production
+        $monthlyFinalInspection = Production::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("MONTHNAME(production_date) as month_name, SUM(final_inspection) as finalInspectionMonthTotal, SUM(final_inspection_others) as finaltOthersgMonthTotal"),
+            )
+            ->whereYear('production_date', date('Y'))
+            ->groupBy('month_name')
+            ->orderBy('production_date','ASC')
+            ->get();
         //dd($items);
         //Carbon::now()->month
       
         $productionShortReview = Production::select('*')->orderBy('production_date','desc')->get()->first();
-        return view('dashboard.home', compact('productionShortReview','monthlyYDProduction','monthlyDyedYarnDelivery','monthlyFabricDelivery','monthlyGreigeInspection','monthlyWeaving'));
+        return view('dashboard.home', compact('productionShortReview','monthlyYDProduction','monthlyAOPDelivery','monthlyFabricDelivery','monthlyGreigeInspection','monthlyWeaving','monthlyPretreatment','monthlyFinalInspection','monthlySolidDyeing','monthlySanforizing','monthlySoftFlow','monthlyAOP'));
     }
     public function dailyProductionEntryForm(){
         return view('dashboard.dailyProductionEntryForm');
@@ -85,6 +145,7 @@ class DashboardController extends Controller
     public function dailyProductionEntry(Request $request){
         $request->validate([
             'yarndyeing'=>['required','string','max:7'],
+            'yarndyeing_outparty'=>['required','string','max:7'],
             'warping'=>['required','string','max:6'],
             'sizing'=>['required','string','max:6'],
         ]);
@@ -92,10 +153,13 @@ class DashboardController extends Controller
         $productionInfo['user_id']=auth()->user()->id;
         $productionInfo['production_date']=$request->get('production_date');
         $productionInfo['yarndyeing']=$request->get('yarndyeing');
+        $productionInfo['yarndyeing_outparty']=$request->get('yarndyeing_outparty');
         $productionInfo['warping']=$request->get('warping');
         $productionInfo['sizing']=$request->get('sizing');
         $productionInfo['weaving']=$request->get('weaving');
+        $productionInfo['weaving_outsite']=$request->get('weaving_outsite');
         $productionInfo['pretreatment']=$request->get('pretreatment');
+        $productionInfo['pretreatment_others']=$request->get('pretreatment_others');
         $productionInfo['bleaching']=$request->get('bleaching');
         $productionInfo['bleaching_others']=$request->get('bleaching_others');
         $productionInfo['mercerize']=$request->get('mercerize');
@@ -119,6 +183,23 @@ class DashboardController extends Controller
         $productionInfo['softflow_woven_others']=$request->get('softflow_woven_others');
         $productionInfo['softflow_knit']=$request->get('softflow_knit');
         $productionInfo['softflow_knit_others']=$request->get('softflow_knit_others');
+
+        $productionInfo['softflow_knit_delivery_grey']=$request->get('softflow_knit_delivery_grey');
+        $productionInfo['softflow_knit_delivery_finish']=$request->get('softflow_knit_delivery_finish');
+
+        $productionInfo['aop_rotary_print_knit']=$request->get('aop_rotary_print_knit');        
+        $productionInfo['aop_rotary_print_woven']=$request->get('aop_rotary_print_woven');        
+        $productionInfo['aop_rotary_print_outsite_woven']=$request->get('aop_rotary_print_outsite_woven');        
+        $productionInfo['aop_flatbed_print_knit']=$request->get('aop_flatbed_print_knit');        
+        $productionInfo['aop_flatbed_print_woven']=$request->get('aop_flatbed_print_woven');        
+        $productionInfo['aop_flatbed_print_outsite_woven']=$request->get('aop_flatbed_print_outsite_woven');        
+        $productionInfo['aop_digital_print_knit']=$request->get('aop_digital_print_knit');        
+        $productionInfo['aop_digital_print_woven']=$request->get('aop_digital_print_woven');        
+        $productionInfo['aop_digital_print_outsite_woven']=$request->get('aop_digital_print_outsite_woven');
+
+        $productionInfo['aop_rotary_baby_knit']=$request->get('aop_rotary_baby_knit');           
+        $productionInfo['aop_rotary_baby_woven']=$request->get('aop_rotary_baby_woven');           
+
         $productionInfo['final_inspection']=$request->get('final_inspection');
         $productionInfo['final_inspection_others']=$request->get('final_inspection_others');
         $productionInfo['greige_inspection']=$request->get('greige_inspection');
@@ -214,9 +295,11 @@ class DashboardController extends Controller
         //$pro_id = $request->get('hidden_id');
         $production = Production::find($request->get('hidden_id'));
         $production->yarndyeing = $request->get('yarndyeing');
+        $production->yarndyeing_outparty=$request->get('yarndyeing_outparty');
         $production->warping = $request->get('warping');
         $production->sizing = $request->get('sizing');
         $production->weaving = $request->get('weaving');
+        $production->weaving_outsite = $request->get('weaving_outsite');
         $production->pretreatment = $request->get('pretreatment');
         $production->pretreatment_others = $request->get('pretreatment_others');
         $production->bleaching = $request->get('bleaching');
@@ -225,6 +308,7 @@ class DashboardController extends Controller
         $production->mercerize_others = $request->get('mercerize_others');
         $production->padsteam_pretreatment = $request->get('padsteam_pretreatment');
         $production->padsteam_pretreatment_others = $request->get('padsteam_pretreatment_others');
+        
         $production->thermosol = $request->get('thermosol');
         $production->thermosol_others = $request->get('thermosol_others');
         $production->cpb = $request->get('cpb');
@@ -242,6 +326,22 @@ class DashboardController extends Controller
         $production->softflow_woven_others = $request->get('softflow_woven_others');
         $production->softflow_knit = $request->get('softflow_knit');
         $production->softflow_knit_others = $request->get('softflow_knit_others');
+
+
+        //AOP Part
+
+        $production->aop_rotary_print_knit = $request->get('aop_rotary_print_knit');        
+        $production->aop_rotary_print_woven = $request->get('aop_rotary_print_woven');        
+        $production->aop_rotary_print_outsite_woven = $request->get('aop_rotary_print_outsite_woven');        
+        $production->aop_flatbed_print_knit = $request->get('aop_flatbed_print_knit');        
+        $production->aop_flatbed_print_woven = $request->get('aop_flatbed_print_woven');        
+        $production->aop_flatbed_print_outsite_woven = $request->get('aop_flatbed_print_outsite_woven');        
+        $production->aop_digital_print_knit = $request->get('aop_digital_print_knit');        
+        $production->aop_digital_print_woven = $request->get('aop_digital_print_woven');        
+        $production->aop_digital_print_outsite_woven = $request->get('aop_digital_print_outsite_woven');
+
+        $production->aop_rotary_baby_knit = $request->get('aop_rotary_baby_knit');           
+        $production->aop_rotary_baby_woven = $request->get('aop_rotary_baby_woven'); 
 
         //This part of Finishing
         $production->stenter = $request->get('stenter');
@@ -264,6 +364,11 @@ class DashboardController extends Controller
         $production->printing_knit_mm_total_month = $request->get('printing_knit_mm_total_month');
         $production->printing_woven_mm = $request->get('printing_woven_mm');
         $production->printing_woven_mm_total_month = $request->get('printing_woven_mm_total_month');
+
+        //SoftFlow Delivery
+        $production->softflow_knit_delivery_grey = $request->get('softflow_knit_delivery_grey');
+        $production->softflow_knit_delivery_finish = $request->get('softflow_knit_delivery_finish');
+
         $production->fabric_delivery_mm = $request->get('fabric_delivery_mm');
         $production->fabric_delivery_mm_others = $request->get('fabric_delivery_mm_others');
         $production->fabric_delivery_mm_commission = $request->get('fabric_delivery_mm_commission');

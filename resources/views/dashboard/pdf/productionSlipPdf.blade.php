@@ -10,7 +10,7 @@
   <style>
     * {
       margin: 0;
-      padding: 5;
+      padding: 2;
     }
     table {
       border-collapse: collapse;
@@ -30,9 +30,8 @@
     }
 </style>
 <div class="container">
-	<div class="row">
-    <h2 class="text-center">Paramount Textile PLC</h2>
-    <h3 class="text-center">Production Date: {{$productionSlip->production_date}}</h3>
+    <h3 class="text-center">Paramount Textile PLC</h3>
+    <p class="text-center">Production Date: {{$productionSlip->production_date}}</p>
     <div style="overflow-x: auto;">
 		 <table class="table table-bordered table-hover border-primary">
       <tr class="table-info border-success">
@@ -81,7 +80,7 @@
         <td>{{ number_format($productionSlip->weaving) }}</td>
         <td>ERP</td>
       </tr>
-      <tr>
+      <!-- <tr>
         <th colspan="2">Greige Inspection</th>
         <td>MTR</td>
         <td>1,00,000</td>
@@ -89,7 +88,7 @@
         <td>{{ number_format($productionSlip->greige_inspection_outparty) }}</td>
         <td>{{ number_format($productionSlip->greige_inspection + $productionSlip->greige_inspection_outparty) }}</td>
         <td>ERP</td>
-      </tr>
+      </tr> -->
       <tr>
         <th rowspan="4">Pretreatment</th>
         <td>Singeing</td>
@@ -242,7 +241,7 @@
         <td>TON</td>
         <td>10</td>
         <td colspan="2">{{ $productionSlip->yd_outparty_mm / 1000 }}</td>
-        <td>{{ $productionSlip->yd_outparty_mm_total_month / 1000}}</td>            
+        <td>{{ $productionSlip->yd_outparty_mm_total_month / 1000}} (UP TO)</td>            
         <td>ERP</td>
       </tr>
       <tr>
@@ -250,7 +249,7 @@
         <td>TON</td>
         <td>10</td>
         <td colspan="2">{{ $productionSlip->printing_knit_mm / 1000 }}</td>
-        <td>{{ $productionSlip->printing_knit_mm_total_month / 1000 }}</td>
+        <td>{{ $productionSlip->printing_knit_mm_total_month / 1000 }} (UP TO)</td>
         <td>ERP</td>
       </tr>
       <tr>
@@ -258,20 +257,19 @@
         <td>YDS</td>
         <td>30,000</td>
         <td colspan="2">{{ number_format($productionSlip->printing_woven_mm) }}</td>
-        <td>{{ number_format($productionSlip->printing_woven_mm_total_month) }}</td>
+        <td>{{ number_format($productionSlip->printing_woven_mm_total_month) }} (UP TO)</td>
         <td>ERP</td>
       </tr>
       <tr>
-        <td>Delivery(Woven)</td>
+        <td>Delivery(Woven) </td>
         <td>YDS</td>
         <td>60,00000</td>
         <td colspan="2">{{ number_format($productionSlip->fabric_delivery_mm) }}</td>
-        <td>{{ number_format($productionSlip->fabric_delivery_mm_total_month) }}</td>
+        <td>{{ number_format($productionSlip->fabric_delivery_mm_total_month) }} (UP TO)</td>
         <td>ERP+Manual</td>
       </tr>
     </table>
   </div>
-	</div>
 </div>
 </body>
 </html>
